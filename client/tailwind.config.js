@@ -8,8 +8,15 @@ module.exports = {
   ],
   theme: {
     colors: {
-      "primary": "#63E2B7FF",
-      "info": "#70C0E8FF"
+      "primary": "#165fa0ff",
+      "secondary": "#4a6b91",
+      "info": "#66c6d2",
+      "success": "#00a75c",
+      "warning": "#e5cb00",
+      "error": "#f60800",
+      "light": "#e4e5e6",
+      "white": "#ffff",
+      "dark": "#0d1215"
     },
   },
   plugins: [],

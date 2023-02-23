@@ -4,6 +4,6 @@ import {NLayoutHeader} from "naive-ui";
 
 <template>
   <header>
-    <n-layout-header>Test header</n-layout-header>
+    <n-layout-header class="flex items-center justify-center">Test header</n-layout-header>
   </header>
 </template>
