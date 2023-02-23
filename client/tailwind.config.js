@@ -8,12 +8,12 @@ module.exports = {
   ],
   theme: {
     colors: {
-      "primary": "#165fa0ff",
-      "secondary": "#4a6b91",
-      "info": "#66c6d2",
-      "success": "#00a75c",
-      "warning": "#e5cb00",
-      "error": "#f60800",
+      "primary": "#154EC1",
+      "secondary": "#666E75",
+      "info": "#158DE3",
+      "success": "#3D9209",
+      "warning": "#FFD43A",
+      "danger": "#E42222",
       "light": "#e4e5e6",
       "white": "#ffff",
       "dark": "#0d1215"

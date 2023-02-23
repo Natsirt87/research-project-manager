@@ -1,5 +1,5 @@
 module.exports = async function (context, req) {
-    context.log("Project GET processed a request");
+    context.log("projects-get processed a request");
 
     context.res.json({
       status: 200,
