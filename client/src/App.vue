@@ -8,6 +8,8 @@ const toggleDark = useToggle(isDark);
 </script>
 
 <template>
-  <Navbar/>
-  <RouterView />
+  <Navbar class="fixed z-10"/>
+  <div style="margin-left: 64px">
+    <RouterView />
+  </div>
 </template>
