@@ -1,12 +1,11 @@
 <script setup>
 import { ref, onMounted} from 'vue';
 import { VaInput, VaDivider, VaIcon, VaProgressCircle } from 'vuestic-ui';
-
 const searchValue = ref("");
 const message = ref("");
 
 onMounted(async () => {
-  message.value = (await (await fetch("/api/projects")).json()).body;
+  message.value  = (await (await fetch("/api/projects")).json()).body;
 });
 
 </script>
