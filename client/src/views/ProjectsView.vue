@@ -32,7 +32,7 @@ onMounted(async () => {
           </span>
         </div>
 
-        <div v-if="projectData == null" class="flex justify-center min-h-[150px]">
+        <div v-if="projectData == null" class="flex justify-center items-center min-h-[150px]">
           <va-progress-circle  indeterminate />
         </div>
         <div v-else class="px-5 pt-6 pb-3">
