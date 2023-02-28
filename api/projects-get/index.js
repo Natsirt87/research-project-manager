@@ -6,7 +6,13 @@ module.exports = async function (context, req) {
     try {
       const database = await sql.connect(process.env.SQLConnectionString);
 
-      const result = await database.request().query(`SELECT * FROM Progress`);
+      const query =
+      `
+        SELECT *
+        FROM ResearchProject
+      `;
+
+      const result = await database.request().query(query);
 
       database.close();
 
