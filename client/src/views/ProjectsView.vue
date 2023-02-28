@@ -13,7 +13,7 @@ onMounted(async () => {
 <template>
   <main>
     <div class="pt-14 px-5">
-      <div class="bg-white shadow-slate-400 flex flex-col justify-center text-center shadow-lg max-w-5xl rounded-lg">
+      <div class="bg-white m-auto shadow-slate-400 flex flex-col justify-center text-center shadow-lg max-w-5xl rounded-lg">
         <h1 class="text-3xl font-bold pt-4 pb-3">Research Projects</h1>
         
         <va-divider class="px-3 mb-6"/>
