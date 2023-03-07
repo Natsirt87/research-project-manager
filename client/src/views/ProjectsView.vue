@@ -102,12 +102,12 @@ onMounted(async () => {
           </span>
         </div>
 
-        <div v-if="projectData == null" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
+        <!-- <div v-if="projectData == null" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
-        </div>
-        <div v-else class="px-5 pt-6 pb-3 flex-1">
+        </div> -->
+        <div class="px-5 pt-6 pb-3 flex-1">
           <va-data-table 
-            :items="projectData" 
+            :items="testProjectData" 
             :filter="searchValue"
             :columns="columns"
             :item-size="46"
