@@ -7,9 +7,6 @@ import { RouterLink, useRoute } from 'vue-router';
 const route = useRoute();
 
 const items = reactive([
-    {title: "Home", icon: "home", url: "/", 
-      active: computed(() => route.name == "home")},
-
     {title: "Projects", icon: "view_list", url: "/projects", 
       active: computed(() => route.name == "projects")},
 
