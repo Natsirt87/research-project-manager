@@ -14,7 +14,7 @@ module.exports = async function (context, req) {
             SET title = ${title},
                 description = ${description},
                 startDate = ${startDate},
-                endDate = ${endDate},
+                endDate = ${endDate ?? "NULL"},
                 budget = ${budget}
             WHERE ResearchProject.ID = ${projectID}
         `;
