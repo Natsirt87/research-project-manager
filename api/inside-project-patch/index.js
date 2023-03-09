@@ -12,8 +12,8 @@ module.exports = async function (context, req) {
         const query = 
         `
             UPDATE ResearchProject
-            SET title = '${title}',
-                description = '${description}',
+            SET title = '${title.replace("'","''")}',
+                description = '${description.replace("'","''"}',
                 startDate = '${startDate}',
                 endDate = ${`'${endDate}'` ?? "NULL"},
                 budget = ${budget}
