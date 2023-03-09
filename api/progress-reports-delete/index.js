@@ -5,12 +5,12 @@ module.exports = async function (context, req) {
     try {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
-        const projectID = req.body;
+        const {projectID, progressID} = req.body;
 
         const query = 
         `
-            DELETE FROM ResearchProject
-            WHERE ResearchProject.ID = ${projectID}
+            DELETE FROM Progress
+            WHERE ID = ${progressID} AND ProjectID = ${projectID}
         `;
         const result = await database.request().query(query);
         

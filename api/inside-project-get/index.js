@@ -6,15 +6,13 @@ module.exports = async function (context, req) {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
         // for the meantime, i will leave placeholder parameters 
-        // cast int id to string before we query
-        var projectID = "<temp id>"
+        const projectID = req.body;
         const query = 
         `
             SELECT *
             From ResearchProject
-            WHERE ResearchProject.ID =
+            WHERE ResearchProject.ID = ${projectID}
         `;
-        query += (projectID + ';');
         // do we just want to generally display all project details?
         // this is all decision made with the front-end
         const result = await database.request().query(query);
@@ -23,9 +21,7 @@ module.exports = async function (context, req) {
         database.close();
 
         // send sucessful response with JSON
-        context.res.json({status : 200, 
-        headers : {"Content Type" : "application/json"}, 
-        body : result.recordset});
+        context.res.json({status : 200});
 
 
     } catch (error) {

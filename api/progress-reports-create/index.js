@@ -1,25 +1,20 @@
 const sql = require('msql');  
 module.exports = async function (context, req) {
-    context.log('inside-project-patch processed a request');
+    context.log('progress-reports-create processed a request');
 
     try {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
 
-        const { title, description, startDate, endDate, budget, projectID } = req.body;
+        const {projectID, description, percentageComplete, progressDate, totalSpending} = req.body;
 
+        // display all progress done of this project
         const query = 
         `
-            UPDATE ResearchProject
-            SET title = ${title},
-                description = ${description},
-                startDate = ${startDate},
-                endDate = ${endDate ?? "NULL"},
-                budget = ${budget}
-            WHERE ResearchProject.ID = ${projectID}
+            INSERT INTO Progress (ProjectID, Description, PercentageComplete
+                ProgressDate, TotalSpending)
+            VALUES (${projectID}, ${description}, ${percentageComplete}, ${progressDate}, ${totalSpending})
         `;
-        // do we just want to generally display all project details?
-        // this is all decision made with the front-end
         await database.request().query(query);
         
         // close connection once request is fulfilled
@@ -27,7 +22,7 @@ module.exports = async function (context, req) {
 
         // send sucessful response with JSON
         context.res.json({
-            status : 200
+            status : 201 // new resource created
         });
 
 
