@@ -14,7 +14,7 @@ module.exports = async function (context, req) {
       const query =
       `
         UPDATE Researcher
-        SET Email = ${Email}, DepartmentID = ${DepartmentID}
+        SET Email = '${Email}', DepartmentID = ${DepartmentID}
         WHERE Researcher.ID = ${researcherID}
       `;
 

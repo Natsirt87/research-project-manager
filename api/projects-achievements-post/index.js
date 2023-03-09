@@ -14,7 +14,7 @@ module.exports = async function (context, req) {
       const query =
       `
         INSERT INTO Achievement (Title, Date, ProjectID, AchievementTypeID)
-        VALUES (${Title}, '${Date}', ${projectID}, ${AchievementTypeID})
+        VALUES ('${Title}', '${Date}', ${projectID}, ${AchievementTypeID})
       `;
 
       const result = await database.request().query(query);
