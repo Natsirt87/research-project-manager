@@ -1,16 +1,16 @@
-const sql = require('msql');  
+const sql = require('mssql');  
 module.exports = async function (context, req) {
     context.log('inside-project-delete processed a request');
 
     try {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
-        const {projectID, progressID} = req.body;
+        const progressID = req.body.id;
 
         const query = 
         `
             DELETE FROM Progress
-            WHERE ID = ${progressID} AND ProjectID = ${projectID}
+            WHERE ID = ${progressID}
         `;
         const result = await database.request().query(query);
         

@@ -1,4 +1,4 @@
-const sql = require('msql');  
+const sql = require('mssql');  
 module.exports = async function (context, req) {
     context.log('inside-project-patch processed a request');
 
@@ -6,15 +6,16 @@ module.exports = async function (context, req) {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
 
-        const { title, description, startDate, endDate, budget, projectID } = req.body;
+        const { title, description, startDate, endDate, budget } = req.body;
+        const projectID = context.bindingData.projectID;
 
         const query = 
         `
             UPDATE ResearchProject
-            SET title = ${title},
-                description = ${description},
-                startDate = ${startDate},
-                endDate = ${endDate ?? "NULL"},
+            SET title = '${title}',
+                description = '${description}',
+                startDate = '${startDate}',
+                endDate = ${`'${endDate}'` ?? "NULL"},
                 budget = ${budget}
             WHERE ResearchProject.ID = ${projectID}
         `;

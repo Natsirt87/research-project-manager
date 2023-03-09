@@ -1,4 +1,4 @@
-const sql = require('msql');  
+const sql = require('mssql');  
 module.exports = async function (context, req) {
     context.log('inside-project-get processed a request');
 
@@ -6,7 +6,7 @@ module.exports = async function (context, req) {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
         // for the meantime, i will leave placeholder parameters 
-        const projectID = req.body;
+        const projectID = context.bindingData.projectID;
         const query = 
         `
             SELECT *
@@ -21,7 +21,11 @@ module.exports = async function (context, req) {
         database.close();
 
         // send sucessful response with JSON
-        context.res.json({status : 200});
+        context.res.json({
+            status : 200,
+            headers: {"Content-Type": "application/json"},
+            body: result.recordsets
+        });
 
 
     } catch (error) {

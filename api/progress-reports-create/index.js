@@ -1,4 +1,4 @@
-const sql = require('msql');  
+const sql = require('mssql');  
 module.exports = async function (context, req) {
     context.log('progress-reports-create processed a request');
 
@@ -6,14 +6,14 @@ module.exports = async function (context, req) {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
 
-        const {projectID, description, percentageComplete, progressDate, totalSpending} = req.body;
+        const { description, percentageComplete, progressDate, totalSpending } = req.body;
+        const projectID = context.bindingData.projectID;
 
         // display all progress done of this project
         const query = 
         `
-            INSERT INTO Progress (ProjectID, Description, PercentageComplete
-                ProgressDate, TotalSpending)
-            VALUES (${projectID}, ${description}, ${percentageComplete}, ${progressDate}, ${totalSpending})
+            INSERT INTO Progress (ProjectID, Description, PercentageComplete, ProgressDate, TotalSpending)
+            VALUES (${projectID}, '${description}', ${percentageComplete}, '${progressDate}', ${totalSpending})
         `;
         await database.request().query(query);
         
