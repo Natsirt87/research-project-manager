@@ -10,11 +10,11 @@ module.exports = async function (context, req) {
 
       const query =
       `
-      SELECT *
-      FROM ResearchProject
-      JOIN ResearchersProject ON (ResearchersProject.ProjectID = ResearchProject.ID)
-      JOIN Researcher ON (Researcher.ID = ResearchersProject.ResearcherID)
-      WHERE Researcher.ID = '${researcherId}'      
+      SELECT RP.ID, RP.Title, RP.Description, RP.StartDate, RP.EndDate, RP.Budget
+      FROM ResearchProject RP
+      JOIN ResearchersProject RSP ON (RSP.ProjectID = RP.ID)
+      JOIN Researcher R ON (R.ID = RSP.ResearcherID)
+      WHERE R.ID = '${researcherId}'      
       `;
 
       const result = await database.request().query(query);
