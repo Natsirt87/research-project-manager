@@ -6,29 +6,27 @@ module.exports = async function (context, req) {
     try {
       const database = await sql.connect(process.env.SQLConnectionString);
 
-      const id = req.body.id;
       const institutionID = req.body.institutionID;
       const amount = req.body.amount;
       const projectID = context.bindingData.id;
-      const receivedDate = req.body;
+      const receivedDate = req.body.receivedDate;
+
+      context.log(receivedDate);
 
       const query =
       `
         INSERT INTO FundingSource (
-            id, 
-            institutionID, 
-            amount, 
-            projectID, 
-            receivedDate
+            InstitutionID, 
+            Amount, 
+            ProjectID, 
+            ReceivedDate
         )
         VALUES (
-            ${id},
             ${institutionID},
             ${amount},
             ${projectID},
-            ${receivedDate}
+            '${receivedDate}'
         )
-        RETURNING id
       `;
 
       const result = await database.request().query(query);
