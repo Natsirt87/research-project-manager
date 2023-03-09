@@ -6,7 +6,11 @@ module.exports = async function (context, req) {
     try {
       const database = await sql.connect(process.env.SQLConnectionString);
 
-      const { id, institutionID, amount, projectID, receivedDate } = req.body;
+      const id = req.body.id;
+      const institutionID = req.body.institutionID;
+      const amount = req.body.amount;
+      const projectID = context.bindingData.id;
+      const receivedDate = req.body;
 
       const query =
       `
