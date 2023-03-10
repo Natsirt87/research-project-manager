@@ -11,16 +11,16 @@ module.exports = async function (context, req) {
     const query =
       `
       INSERT INTO Researcher (FirstName, LastName, Email, DepartmentID)
-      VALUES (${firstName}, ${lastName}, ${email}, ${departmentId})
+      VALUES ('${firstName.replace("'", "''")}', '${lastName.replace("'", "''")}', '${email.replace("'", "''")}', ${departmentId})
       `;
 
     await database.request().query(query);
 
     database.close();
 
-    context.res = {
+    context.res.json({
       status: 200
-    };
+    });
   } catch (error) {
     context.res = {
       status: 500,

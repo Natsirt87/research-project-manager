@@ -11,7 +11,12 @@ module.exports = async function (context, req) {
     const query =
       `
       INSERT INTO ResearchProject (Title, Description, StartDate, EndDate, Budget)
-      VALUES (${title}, ${description}, ${startDate}, ${endDate ?? "NULL"}, ${budget})
+      VALUES (
+        '${title.replace("'", "''")}', 
+        '${description.replace("'", "''")}', 
+        '${startDate}', 
+        ${endDate != undefined ? `'${endDate}'` : "NULL"}, 
+        ${budget})
       `;
 
     await database.request().query(query);
