@@ -9,12 +9,12 @@ module.exports = async function (context, req) {
       const database = await sql.connect(process.env.SQLConnectionString);
 
       // const projectID = context.bindingData.id;
-      const { ID } = req.body;
+      const { id } = req.body;
 
       const query =
       `
         DELETE FROM Achievement
-        WHERE Achievement.ID = ${ID}
+        WHERE Achievement.ID = ${id}
       `;
 
       const result = await database.request().query(query);

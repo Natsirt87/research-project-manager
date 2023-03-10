@@ -9,12 +9,12 @@ module.exports = async function (context, req) {
       const database = await sql.connect(process.env.SQLConnectionString);
 
       const projectID = context.bindingData.id;
-      const { Title, Date, AchievementTypeID } = req.body;
+      const { title, date, achievementTypeID } = req.body;
 
       const query =
       `
         INSERT INTO Achievement (Title, Date, ProjectID, AchievementTypeID)
-        VALUES ('${Title.replace("'", "''")}', '${Date}', ${projectID}, ${AchievementTypeID})
+        VALUES ('${title.replace("'", "''")}', '${date}', ${projectID}, ${achievementTypeID})
       `;
 
       const result = await database.request().query(query);

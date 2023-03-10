@@ -9,12 +9,12 @@ module.exports = async function (context, req) {
       const database = await sql.connect(process.env.SQLConnectionString);
 
       const researcherID = context.bindingData.id;
-      const { Email, DepartmentID } = req.body;
+      const { email, departmentID } = req.body;
 
       const query =
       `
         UPDATE Researcher
-        SET Email = '${Email}', DepartmentID = ${DepartmentID}
+        SET Email = '${email}', DepartmentID = ${departmentID}
         WHERE Researcher.ID = ${researcherID}
       `;
 
@@ -31,7 +31,7 @@ module.exports = async function (context, req) {
     } catch (error) {
       context.res.json({
         status: 500,
-        body: "Failed to connect to database with error: " + error
+        body: "Failed to update researcher: " + error
       });
     }
 }

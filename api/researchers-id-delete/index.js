@@ -11,18 +11,18 @@ module.exports = async function (context, req) {
       const researcherID = context.bindingData.id;
       //const { ID } = req.body;
 
-      const query =
+      let query =
       `
         DELETE FROM ResearchersProject
         WHERE ResearchersProject.ResearcherID = ${researcherID}
       `;
       
-      const result = await database.request().query(query);
+      let result = await database.request().query(query);
       
       query =
       `
         DELETE FROM Researcher
-        WHERE Researcher = ${researcherID}
+        WHERE ID = ${researcherID}
       `;
       
       result = await database.request().query(query);
