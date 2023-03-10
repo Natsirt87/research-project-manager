@@ -13,9 +13,9 @@ module.exports = async function (context, req) {
         `
             UPDATE ResearchProject
             SET title = '${title.replace("'","''")}',
-                description = '${description.replace("'","''"}',
+                description = '${description.replace("'","''")}',
                 startDate = '${startDate}',
-                endDate = ${`'${endDate}'` ?? "NULL"},
+                endDate = ${endDate != undefined ? `'${endDate}'` : "NULL"},
                 budget = ${budget}
             WHERE ResearchProject.ID = ${projectID}
         `;
