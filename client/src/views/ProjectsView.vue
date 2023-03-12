@@ -7,7 +7,6 @@ import { round } from 'lodash';
 
 const searchValue = ref("");
 const projectData = ref([]);
-const filteredData = ref(projectData);
 
 const showCreate = ref(false);
 
@@ -38,10 +37,6 @@ function sortDate(firstDateString, secondDateString) {
   if (firstDate > secondDate) return 1;
   else if (firstDate < secondDate) return -1;
   else return 0;
-}
-
-function onFilter (event) {
-  filteredData.value = event.items;
 }
 
 function onRowClick (param) {
@@ -121,13 +116,6 @@ onMounted(refreshTable);
           <va-data-table 
             :items="projectData"
             :filter="searchValue"
-            :colums="columns"
-            :item-size="46"
-            style="height: 100%"
-          />
-          <!-- <va-data-table 
-            :items="projectData" 
-            :filter="searchValue"
             :columns="columns"
             :item-size="46"
             virtual-scroller
@@ -136,9 +124,8 @@ onMounted(refreshTable);
             clickable
             hoverable
             @row:click="onRowClick"
-            @filtered="onFilter"
             style="height: 100%"
-          /> -->
+          />
         </div>
         
       </div>

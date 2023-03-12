@@ -6,7 +6,6 @@ import CreateElement from '../components/CreateElement.vue';
 
 const searchValue = ref("");
 const researcherData = ref([]);
-const filteredData = ref(researcherData);
 
 const showCreate = ref(false);
 
@@ -46,10 +45,6 @@ function sortDate(firstDateString, secondDateString) {
   if (firstDate > secondDate) return 1;
   else if (firstDate < secondDate) return -1;
   else return 0;
-}
-
-function onFilter (event) {
-  filteredData.value = event.items;
 }
 
 function onRowClick (param) {
@@ -130,7 +125,6 @@ onMounted(refreshTable);
             clickable
             hoverable
             @row:click="onRowClick"
-            @filtered="onFilter"
             style="height: 100%"
           />
         </div>
