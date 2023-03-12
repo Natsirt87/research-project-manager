@@ -1,3 +1,5 @@
+// projects-achievements-get
+
 const sql = require('mssql');
 
 module.exports = async function (context, req) {
@@ -6,21 +8,15 @@ module.exports = async function (context, req) {
     try {
       const database = await sql.connect(process.env.SQLConnectionString);
 
+      const projectID = context.bindingData.id;
+
       const query =
       `
-        SELECT R.ID, R.Title, R.Description, R.StartDate, R.EndDate, R.Budget, 
-          P.PercentageComplete AS Progress, P.TotalSpending AS Spending
-        FROM ResearchProject R
-          LEFT JOIN (
-            SELECT ProjectID, MAX(ID) AS ProgressID
-            FROM (  
-                    SELECT ProjectID, ID, MAX(ProgressDate) OVER (PARTITION BY ProjectID) AS NewestDate
-                    FROM Progress
-                  ) AS Sub
-            GROUP BY ProjectID, NewestDate
-          ) AS ProgressNewest ON (ProgressNewest.ProjectID = R.ID)
-          
-          LEFT JOIN Progress P ON (P.ID = ProgressNewest.ProgressID)
+        SELECT Achievement.ID AS ID, Achievement.Title AS Title, 
+               Achievement.Date AS Date, Achievement.AchievementTypeID AS Type
+        FROM ResearchProject
+          JOIN Achievement ON (Achievement.ProjectID = ResearchProject.ID)
+        WHERE ResearchProject.ID = ${projectID}
       `;
 
       const result = await database.request().query(query);
