@@ -8,8 +8,19 @@ module.exports = async function (context, req) {
 
       const query =
       `
-        SELECT *
-        FROM ResearchProject
+        SELECT R.ID, R.Title, R.Description, R.StartDate, R.EndDate, R.Budget, 
+          P.PercentageComplete AS Progress, P.TotalSpending AS Spending
+        FROM ResearchProject R
+          LEFT JOIN (
+            SELECT ProjectID, MAX(ID) AS ProgressID
+            FROM (  
+                    SELECT ProjectID, ID, MAX(ProgressDate) OVER (PARTITION BY ProjectID) AS NewestDate
+                    FROM Progress
+                  ) AS Sub
+            GROUP BY ProjectID, NewestDate
+          ) AS ProgressNewest ON (ProgressNewest.ProjectID = R.ID)
+          
+          LEFT JOIN Progress P ON (P.ID = ProgressNewest.ProgressID)
       `;
 
       const result = await database.request().query(query);

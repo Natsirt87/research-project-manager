@@ -6,7 +6,7 @@
       "direction": "in",
       "name": "req",
       "methods": ["get"],
-      "route": "projects/{id:int}/researchers"
+      "route": "projects/{id:int}/funding"
     },
     {
       "type": "http",
