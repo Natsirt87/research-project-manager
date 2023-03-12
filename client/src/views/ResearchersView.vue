@@ -5,7 +5,7 @@ import { VaInput, VaDivider, VaIcon, VaProgressCircle, VaDataTable, VaButton } f
 import CreateElement from '../components/CreateElement.vue';
 
 const searchValue = ref("");
-const researcherData = ref();
+const researcherData = ref([]);
 const filteredData = ref(researcherData);
 
 const showCreate = ref(false);
@@ -58,7 +58,7 @@ function onRowClick (param) {
 }
 
 async function refreshTable() {
-  researcherData.value = null;
+  researcherData.value = [];
   const { body } = await (await fetch("/api/researchers")).json();
 
   const researchers = body.map((researcher) => {
@@ -115,7 +115,7 @@ onMounted(refreshTable);
           </span>
         </div>
 
-        <div v-if="researcherData == null" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
+        <div v-if="researcherData.length == 0" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
         </div>
         <div class="px-5 pt-6 pb-3 flex-1">

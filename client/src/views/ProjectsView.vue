@@ -6,7 +6,7 @@ import CreateElement from '../components/CreateElement.vue';
 import { round } from 'lodash';
 
 const searchValue = ref("");
-const projectData = ref();
+const projectData = ref([]);
 const filteredData = ref(projectData);
 
 const showCreate = ref(false);
@@ -50,7 +50,7 @@ function onRowClick (param) {
 }
 
 async function refreshTable() {
-  projectData.value = null;
+  projectData.value = [];
   const { body } = await (await fetch("/api/projects")).json();
 
   const projects = body.map((project) => {
@@ -114,7 +114,7 @@ onMounted(refreshTable);
           </span>
         </div>
 
-        <div v-if="projectData == null" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
+        <div v-if="projectData.length == 0" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
         </div>
         <div class="px-5 pt-6 pb-3 flex-1">
