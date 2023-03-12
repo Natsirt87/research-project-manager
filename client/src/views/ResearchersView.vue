@@ -5,8 +5,7 @@ import { VaInput, VaDivider, VaIcon, VaProgressCircle, VaDataTable, VaButton } f
 import CreateElement from '../components/CreateElement.vue';
 
 const searchValue = ref("");
-const researcherData = ref();
-const filteredData = ref(researcherData);
+const researcherData = ref([]);
 
 const showCreate = ref(false);
 
@@ -48,17 +47,13 @@ function sortDate(firstDateString, secondDateString) {
   else return 0;
 }
 
-function onFilter (event) {
-  filteredData.value = event.items;
-}
-
 function onRowClick (param) {
   const ID = param.item.ID;
   router.push(`/researchers/${ID}`);
 }
 
 async function refreshTable() {
-  researcherData.value = null;
+  researcherData.value = [];
   const { body } = await (await fetch("/api/researchers")).json();
 
   const researchers = body.map((researcher) => {
@@ -115,7 +110,7 @@ onMounted(refreshTable);
           </span>
         </div>
 
-        <div v-if="researcherData == null" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
+        <div v-if="researcherData.length == 0" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
         </div>
         <div class="px-5 pt-6 pb-3 flex-1">
@@ -130,7 +125,6 @@ onMounted(refreshTable);
             clickable
             hoverable
             @row:click="onRowClick"
-            @filtered="onFilter"
             style="height: 100%"
           />
         </div>

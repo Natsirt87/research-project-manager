@@ -6,8 +6,7 @@ import CreateElement from '../components/CreateElement.vue';
 import { round } from 'lodash';
 
 const searchValue = ref("");
-const projectData = ref();
-const filteredData = ref(projectData);
+const projectData = ref([]);
 
 const showCreate = ref(false);
 
@@ -40,17 +39,13 @@ function sortDate(firstDateString, secondDateString) {
   else return 0;
 }
 
-function onFilter (event) {
-  filteredData.value = event.items;
-}
-
 function onRowClick (param) {
   const ID = param.item.ID;
   router.push(`/projects/${ID}`);
 }
 
 async function refreshTable() {
-  projectData.value = null;
+  projectData.value = [];
   const { body } = await (await fetch("/api/projects")).json();
 
   const projects = body.map((project) => {
@@ -114,12 +109,12 @@ onMounted(refreshTable);
           </span>
         </div>
 
-        <div v-if="projectData == null" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
+        <div v-if="projectData.length == 0" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
         </div>
         <div class="px-5 pt-6 pb-3 flex-1">
           <va-data-table 
-            :items="projectData" 
+            :items="projectData"
             :filter="searchValue"
             :columns="columns"
             :item-size="46"
@@ -129,7 +124,6 @@ onMounted(refreshTable);
             clickable
             hoverable
             @row:click="onRowClick"
-            @filtered="onFilter"
             style="height: 100%"
           />
         </div>
