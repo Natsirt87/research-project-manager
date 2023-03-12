@@ -118,7 +118,8 @@ onMounted(refreshTable);
           <va-progress-circle  indeterminate />
         </div>
         <div class="px-5 pt-6 pb-3 flex-1">
-          <va-data-table 
+          <va-data-table />
+          <!-- <va-data-table 
             :items="projectData" 
             :filter="searchValue"
             :columns="columns"
@@ -131,7 +132,7 @@ onMounted(refreshTable);
             @row:click="onRowClick"
             @filtered="onFilter"
             style="height: 100%"
-          />
+          /> -->
         </div>
         
       </div>
