@@ -19,8 +19,7 @@ const columns = [
   { key: "Progress", sortable: true},
   { key: "Spending", sortable: true},
   { key: "Budget", sortable: true},
-  { key: "BudgetUsed", sortable: true},
-  { key: "actions"}
+  { key: "BudgetUsed", sortable: true}
 ];
 
 const addProjectInputs = {
