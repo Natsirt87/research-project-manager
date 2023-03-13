@@ -13,9 +13,10 @@ module.exports = async function (context, req) {
       const query =
       `
         SELECT Achievement.ID AS ID, Achievement.Title AS Title, 
-               Achievement.Date AS Date, Achievement.AchievementTypeID AS Type
+               Achievement.Date AS Date, AchievementType.Name AS Type
         FROM ResearchProject
           JOIN Achievement ON (Achievement.ProjectID = ResearchProject.ID)
+          JOIN AchievementType ON (AchievementType.ID = Achievement.AchievementTypeID)
         WHERE ResearchProject.ID = ${projectID}
       `;
 

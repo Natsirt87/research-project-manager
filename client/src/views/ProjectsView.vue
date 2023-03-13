@@ -19,7 +19,8 @@ const columns = [
   { key: "Progress", sortable: true},
   { key: "Spending", sortable: true},
   { key: "Budget", sortable: true},
-  { key: "BudgetUsed", sortable: true}
+  { key: "BudgetUsed", sortable: true},
+  { key: "actions"}
 ];
 
 const addProjectInputs = {
@@ -112,7 +113,7 @@ onMounted(refreshTable);
         <div v-if="projectData.length == 0" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
         </div>
-        <div class="px-5 pt-6 pb-3 flex-1">
+        <div v-else class="px-5 pt-6 pb-3 flex-1">
           <va-data-table 
             :items="projectData"
             :filter="searchValue"
@@ -125,7 +126,12 @@ onMounted(refreshTable);
             hoverable
             @row:click="onRowClick"
             style="height: 100%"
-          />
+          >
+            <!-- <template #cell(actions)="{ rowIndex }">
+              {{ projectData[rowIndex].ID }}
+              <va-button>Test</va-button>
+            </template> -->
+          </va-data-table>
         </div>
         
       </div>

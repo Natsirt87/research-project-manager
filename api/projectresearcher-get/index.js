@@ -11,7 +11,7 @@ module.exports = async function (context, req) {
       const query =
       `
         SELECT Researcher.ID, Researcher.FirstName, Researcher.LastName,
-            Researcher.Email, ResearcherDepartment.Name
+            Researcher.Email, ResearcherDepartment.Name AS Department
         FROM ResearchersProject
             JOIN Researcher ON ( Researcher.ID = ResearchersProject.ResearcherID )
             JOIN ResearcherDepartment ON ( ResearcherDepartment.ID = Researcher.DepartmentID )

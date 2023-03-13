@@ -22,10 +22,10 @@ module.exports = async function (context, req) {
 
         // send sucessful response with JSON
         context.res.json({
-            status : 200,
+            status: 200,
             headers: {"Content-Type": "application/json"},
-            body: result.recordsets
-        });
+            body: result.recordset
+          })
 
 
     } catch (error) {

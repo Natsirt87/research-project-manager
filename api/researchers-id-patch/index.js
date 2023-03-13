@@ -9,12 +9,12 @@ module.exports = async function (context, req) {
       const database = await sql.connect(process.env.SQLConnectionString);
 
       const researcherID = context.bindingData.id;
-      const { email, departmentID } = req.body;
+      const { firstName, lastName, email, departmentID } = req.body;
 
       const query =
       `
         UPDATE Researcher
-        SET Email = '${email}', DepartmentID = ${departmentID}
+        SET FirstName = '${firstName}', LastName = '${lastName}', Email = '${email}', DepartmentID = ${departmentID}
         WHERE Researcher.ID = ${researcherID}
       `;
 
@@ -25,7 +25,7 @@ module.exports = async function (context, req) {
       context.res.json({
         status: 200,
         headers: {"Content-Type": "application/json"},
-        body: result.recordset
+        body: result
       })
 
     } catch (error) {

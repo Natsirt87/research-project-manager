@@ -81,104 +81,104 @@ async function submit() {
 </script>
 
 <template>
-<va-modal 
-  ref="modalRef" 
-  :model-value="props.modelValue" 
-  :before-close="() => $emit('update:modelValue', false)" 
-  no-padding
->
-  <template #content="{ ok }">
-    <div class="sm:w-[500px] md:w-[600px] md:px-4 lg:w-[700px] lg:px-6">
-      <va-card-title>
-        <h1 class=" text-base">{{ props.title }}</h1>
-      </va-card-title>
-      
-      <va-card-content class="flex flex-col gap-6 w-full mb-2 mt-2">
-        <!-- Parsing inputs -->
-        <span v-for="(value, key) in props.inputs">
-          <va-input v-if="value.type == String" :label="value.label" class="w-full" v-model="inputData[key]" />
+  <va-modal 
+    ref="modalRef" 
+    :model-value="props.modelValue" 
+    :before-close="() => $emit('update:modelValue', false)" 
+    no-padding
+  >
+    <template #content="{ ok }">
+      <div class="sm:w-[500px] md:w-[600px] md:px-4 lg:w-[700px] lg:px-6">
+        <va-card-title>
+          <h1 class=" text-base">{{ props.title }}</h1>
+        </va-card-title>
+        
+        <va-card-content class="flex flex-col gap-6 w-full mb-2 mt-2">
+          <!-- Parsing inputs -->
+          <span v-for="(value, key) in props.inputs">
+            <va-input v-if="value.type == String" :label="value.label" class="w-full" v-model="inputData[key]" />
 
-          <va-input 
-            v-if="value.type == BigInt" 
-            :label="value.label" 
-            class="w-full" 
-            type="textarea"
-            :min-rows="3"
-            :max-rows="6" 
-            v-model="inputData[key]"
-          />
+            <va-input 
+              v-if="value.type == BigInt" 
+              :label="value.label" 
+              class="w-full" 
+              type="textarea"
+              :min-rows="3"
+              :max-rows="6" 
+              v-model="inputData[key]"
+            />
 
-          <va-input 
-            v-if="value.type == Boolean" 
-            :label="value.label" 
-            class="w-full" 
-            type="email"
-            v-model="inputData[key]"
-          />
+            <va-input 
+              v-if="value.type == Boolean" 
+              :label="value.label" 
+              class="w-full" 
+              type="email"
+              v-model="inputData[key]"
+            />
 
-          <va-date-input 
-            v-if="value.type == Date" 
-            :label="value.label" 
-            class="w-full" 
-            v-model="inputData[key]" 
-          />
+            <va-date-input 
+              v-if="value.type == Date" 
+              :label="value.label" 
+              class="w-full" 
+              v-model="inputData[key]" 
+            />
 
-          <va-input 
-            v-if="value.type == Number" 
-            :label="value.label" 
-            class="w-full" 
-            v-model="inputData[key]"
-            mask="numeral"
-          >
-            <template #prependInner>
-              <va-icon style="margin-left: -5px;" name="attach_money" size="small"/>
-            </template>
-          </va-input>
+            <va-input 
+              v-if="value.type == Number" 
+              :label="value.label" 
+              class="w-full" 
+              v-model="inputData[key]"
+              mask="numeral"
+            >
+              <template #prependInner>
+                <va-icon style="margin-left: -5px;" name="attach_money" size="small"/>
+              </template>
+            </va-input>
 
-          <va-select 
-            v-if="Array.isArray(value.type)" 
-            :label="value.label" 
-            :options="value.type" 
-            class="w-full" 
-            v-model="inputData[key]"
-          />
+            <va-select 
+              v-if="Array.isArray(value.type)" 
+              :label="value.label" 
+              :options="value.type" 
+              class="w-full" 
+              v-model="inputData[key]"
+            />
 
+          </span>
+
+        </va-card-content>
+
+        <span class="flex justify-center text-danger mb-1 w-full text-center" style="font-size: 18px;">
+          <p>{{ errorMessage }}</p>
         </span>
 
-      </va-card-content>
+        <!-- Buttons for submitting and canceling -->
+        <va-card-actions align="right">
 
-      <span class="flex justify-center text-danger mb-1 w-full text-center" style="font-size: 18px;">
-        <p>{{ errorMessage }}</p>
-      </span>
+          <va-button 
+            color="danger" 
+            preset="primary" 
+            icon="clear" 
+            :disabled="loading"
+            @click="ok"
+          >
+            Cancel
+          </va-button>
 
-      <!-- Buttons for submitting and canceling -->
-      <va-card-actions align="right">
-
-        <va-button 
-          color="danger" 
-          preset="primary" 
-          icon="clear" 
-          :disabled="loading"
-          @click="ok"
-        >
-          Cancel
-        </va-button>
-
-        <va-button 
-          color="primary" 
-          icon="done" 
-          :disabled="loading" 
-          :loading="loading"
-          @click="async () => { 
-            if (await submit()) {
-              ok();
-            }
-          }"
-        >
-          Submit
-        </va-button>
-      </va-card-actions>
-    </div>
-  </template>
-</va-modal>
+          <va-button 
+            color="primary" 
+            icon="done" 
+            :disabled="loading" 
+            :loading="loading"
+            @click="async () => { 
+              if (await submit()) {
+                ok();
+              }
+            }"
+          >
+            Submit
+          </va-button>
+        </va-card-actions>
+      </div>
+    </template>
+  </va-modal>
 </template>
