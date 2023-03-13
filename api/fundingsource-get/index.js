@@ -10,9 +10,10 @@ module.exports = async function (context, req) {
 
       const query =
       `
-        SELECT *
-        FROM FundingSource
-        WHERE FundingSource.ProjectID = ${projectID}
+        SELECT F.ID, I.Name AS Institution, F.Amount, F.ReceivedDate
+        FROM FundingSource F
+          JOIN Institution I ON (I.ID = F.InstitutionID)
+        WHERE F.ProjectID = ${projectID}
       `;
 
       const result = await database.request().query(query);

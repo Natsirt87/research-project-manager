@@ -113,7 +113,7 @@ onMounted(refreshTable);
         <div v-if="researcherData.length == 0" class="flex justify-center items-center" style="height: calc(100vh - 184px);">
           <va-progress-circle  indeterminate />
         </div>
-        <div class="px-5 pt-6 pb-3 flex-1">
+        <div v-else class="px-5 pt-6 pb-3 flex-1">
           <va-data-table 
             :items="researcherData" 
             :filter="searchValue"

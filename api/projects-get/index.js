@@ -31,7 +31,7 @@ module.exports = async function (context, req) {
         status: 200,
         headers: {"Content-Type": "application/json"},
         body: result.recordset
-      })
+      });
 
     } catch (error) {
       context.res.json({
