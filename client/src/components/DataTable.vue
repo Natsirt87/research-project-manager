@@ -66,7 +66,7 @@ onMounted(() => {
 
 <template>
   <!-- Data table -->
-  <div class="mx-4 border-2 border-light rounded-[4px]" >
+  <div class="mx-4 border-2 border-light rounded-[4px]" :style="`height: ${props.height};`">
     <va-data-table
       v-if="tableContents != null"
       :items="tableContents"
