@@ -22,9 +22,9 @@ module.exports = async function (context, req) {
             ReceivedDate
         )
         VALUES (
-            ${institutionID},
-            ${amount},
-            ${projectID},
+            '${institutionID}',
+            '${amount}',
+            '${projectID}',
             '${receivedDate}'
         )
       `;

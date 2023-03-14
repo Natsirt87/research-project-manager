@@ -16,7 +16,7 @@ module.exports = async function (context, req) {
         '${description.replace("'", "''")}', 
         '${startDate}', 
         ${endDate != undefined ? `'${endDate}'` : "NULL"}, 
-        ${budget})
+        '${budget}')
       `;
 
     await database.request().query(query);

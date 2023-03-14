@@ -13,8 +13,8 @@ module.exports = async function (context, req) {
       `
         INSERT INTO ResearchersProject (researcherID, projectID)
         VALUES (
-            ${researcherID},
-            ${projectID}
+            '${researcherID}',
+            '${projectID}'
         )
       `;
 
