@@ -5,17 +5,20 @@ import { VaModal, VaCardTitle, VaCardContent, VaCardActions, VaButton, VaIcon } 
 const props = defineProps({
   modelValue: Boolean,
   deleteEndpoint: String,
+  deleteBody: Object,
+  title: String,
   message: String,
   onDelete: Function
 })
 
 const error = ref("");
 const loading = ref(false);
+const modalRef = ref(null);
 
 async function deleteElement() {
   loading.value = true;
   try {
-    const response = await fetch(props.deleteEndpoint, {method: "Delete"});
+    const response = await fetch(props.deleteEndpoint, {method: "Delete", body: JSON.stringify(props.deleteBody)});
     console.log(await response.text());
 
     if (response.status > 300) {
@@ -26,8 +29,10 @@ async function deleteElement() {
 
     setTimeout(() => loading.value = false, 1000);
 
-    if (props.onDelete) props.onDelete();
-
+    if (props.onDelete) {
+      setTimeout(props.onDelete, 500);
+    }
+    modalRef.value.hide();
     return true;
   } catch (error) {
     error.value = error;
@@ -47,12 +52,12 @@ async function deleteElement() {
   >
     <template #content="{ ok, cancel }">
       <va-card-title>
-        <h1 class=" text-base">Delete Researcher</h1>
+        <h1 class=" text-base">{{ props.title }}</h1>
       </va-card-title>
       
       <va-card-content>
         <p>
-          {{ message }}
+          {{ props.message }}
         </p>
       </va-card-content>
 
@@ -78,11 +83,7 @@ async function deleteElement() {
           icon="delete" 
           :disabled="loading" 
           :loading="loading"
-          @click="async () => { 
-              if (await deleteElement()) {
-                ok();
-              }
-            }"
+          @click="deleteElement"
         >
           Delete
         </va-button>

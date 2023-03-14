@@ -46,7 +46,7 @@ const researchersColumns = [
 
 const fundingColumns = [
   { key: "institution", sortable: true, fromKey: "Institution" },
-  { key: "lastName", sortable: true, fromKey: "Amount", type: "Money"},
+  { key: "amount", sortable: true, fromKey: "Amount", type: "Money"},
   { key: "dateReceived", sortable: true, fromKey: "ReceivedDate", type: "Date"},
   { key: "actions" } 
 ];
@@ -143,8 +143,9 @@ function startEditing() {
 
             <delete-warning 
               v-model="deleteWarning" 
-              :delete-endpoint="'/api/researchers/' + route.params.id"
-              message="This will permanently delete this researcher. Are you sure you want to continue?"
+              :delete-endpoint="'/api/projects/' + route.params.id"
+              title="Delete Project"
+              message="This will permanently delete this project. Are you sure you want to continue?"
               :on-delete="goBack"
             />
 
@@ -221,9 +222,10 @@ function startEditing() {
         <div class="mt-16 mb-12">
           <h1 class="mb-4 text-xl font-bold">Progress Reports</h1>
           <data-table 
-            :get-endpoint="'/api/projects/' + route.params.id + '/progress'"
+            :endpoint="'/api/projects/' + route.params.id + '/progress'"
             :columns="progressColumns"
-            read-only
+            remove-title="Remove Progress Report"
+            remove-message="This will permanently remove this progress report. Are you sure you want to continue?"
             height="300px"
           />
         </div>
@@ -231,9 +233,10 @@ function startEditing() {
         <div class="mb-12">
           <h1 class="mb-4 text-xl font-bold">Researchers</h1>
           <data-table 
-            :get-endpoint="'/api/projects/' + route.params.id + '/researchers'"
+            :endpoint="'/api/projects/' + route.params.id + '/researchers'"
             :columns="researchersColumns"
-            read-only
+            remove-title="Remove Researcher"
+            remove-message="This will remove this researcher from the project. Are you sure you want to continue?"
             height="350px"
           />
         </div>
@@ -241,29 +244,21 @@ function startEditing() {
         <div class="mb-12">
           <h1 class="mb-4 text-xl font-bold">Funding Sources</h1>
           <data-table 
-            :get-endpoint="'/api/projects/' + route.params.id + '/funding'"
+            :endpoint="'/api/projects/' + route.params.id + '/funding'"
             :columns="fundingColumns"
-            read-only
+            remove-title="Remove Funding Source"
+            remove-message="This will permanently remove this funding source. Are you sure you want to continue?"
             height="200px"
-          />
-        </div>
-        
-        <div class="mb-12">
-          <h1 class="mb-4 text-xl font-bold">Funding Sources</h1>
-          <data-table 
-            :get-endpoint="'/api/projects/' + route.params.id + '/funding'"
-            :columns="fundingColumns"
-            read-only
-            height="150px"
           />
         </div>
 
         <div>
           <h1 class="mb-4 text-xl font-bold">Achievements</h1>
           <data-table 
-            :get-endpoint="'/api/projects/' + route.params.id + '/achievements'"
+            :endpoint="'/api/projects/' + route.params.id + '/achievements'"
             :columns="achievementColumns"
-            read-only
+            remove-title="Remove Achievement"
+            remove-message="This will permanently remove this achievement. Are you sure you want to continue?"
             height="150px"
           />
         </div>

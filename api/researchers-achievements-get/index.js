@@ -8,13 +8,20 @@ module.exports = async function (context, req) {
 
       const researcherId = context.bindingData.id;
 
+      // SELECT A.ID, A.Title, A.Date, A.AchievementTypeID
+      //   FROM Achievement A
+      //   JOIN ResearchersProject RP ON (RP.ProjectID = A.ProjectID)
+      //   JOIN Researcher R ON (R.ID = RP.ResearcherID)
+      //   WHERE R.ID = '${researcherId}'
+
       const query =
       `
-        SELECT A.ID, A.Title, A.Date, A.AchievementTypeID
-        FROM Achievement A
-        JOIN ResearchersProject RP ON (RP.ProjectID = A.ProjectID)
-        JOIN Researcher R ON (R.ID = RP.ResearcherID)
-        WHERE R.ID = '${researcherId}'
+        SELECT Achievement.ID AS ID, Achievement.Title AS Title, 
+               Achievement.Date AS Date, AchievementType.Name AS Type
+        FROM ResearchersProject
+          JOIN Achievement ON (Achievement.ProjectID = ResearchersProject.ProjectID)
+          JOIN AchievementType ON (AchievementType.ID = Achievement.AchievementTypeID)
+        WHERE ResearchersProject.ResearcherID = ${researcherId}
       `;
 
       const result = await database.request().query(query);
@@ -24,7 +31,7 @@ module.exports = async function (context, req) {
       context.res.json({
         status: 200,
         headers: {"Content-Type": "application/json"},
-        body: result.recordsets
+        body: result.recordsets[0]
       })
 
     } catch (error) {
