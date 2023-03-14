@@ -55,7 +55,7 @@ async function refreshTable() {
     const budget = project.Budget ? "$" + project.Budget : "~";
     const progress = project.Progress ? project.Progress + "%" : "~";
 
-    const budgetUsed = project.Budget && project.Spending ? round(project.Budget / project.Spending, 0) + "%" : "0%";
+    const budgetUsed = project.Budget && project.Spending ? round(round(project.Spending / project.Budget, 2) * 100, 0) + "%" : "0%";
 
     return { ...project, "StartDate": startDate, "EndDate": endDate, 
             "Spending": spending, "Budget": budget, "Progress": progress , "BudgetUsed": budgetUsed};
