@@ -13,7 +13,7 @@ module.exports = async function (context, req) {
         const query = 
         `
             INSERT INTO Progress (ProjectID, Description, PercentageComplete, ProgressDate, TotalSpending)
-            VALUES (${projectID}, '${description.replace("'", "''")}', ${percentageComplete}, '${progressDate}', ${totalSpending})
+            VALUES ('${projectID}', '${description.replace("'", "''")}', '${percentageComplete}', '${progressDate}', '${totalSpending}')
         `;
         await database.request().query(query);
         

@@ -16,7 +16,7 @@ module.exports = async function (context, req) {
                 description = '${description.replace("'","''")}',
                 startDate = '${startDate}',
                 endDate = ${endDate != undefined ? `'${endDate}'` : "NULL"},
-                budget = ${budget}
+                budget = '${budget}'
             WHERE ResearchProject.ID = ${projectID}
         `;
         // do we just want to generally display all project details?
