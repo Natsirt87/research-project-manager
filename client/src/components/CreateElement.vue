@@ -67,7 +67,7 @@ async function submit() {
     }
     setTimeout(() => loading.value = false, 1000);
     errorMessage.value = "";
-    props.refreshTable();
+    setTimeout(props.refreshTable, 400);
     return true;
 
   } catch (error) {
@@ -93,15 +93,20 @@ async function submit() {
           <h1 class=" text-base">{{ props.title }}</h1>
         </va-card-title>
         
-        <va-card-content class="flex flex-col gap-6 w-full mb-2 mt-2">
+        <va-card-content class="flex flex-col gap-5 w-full mt-8 mb-4">
           <!-- Parsing inputs -->
           <span v-for="(value, key) in props.inputs">
-            <va-input v-if="value.type == String" :label="value.label" class="w-full" v-model="inputData[key]" />
+            <va-input 
+              v-if="value.type == String" 
+              :label="value.label" 
+              class="w-full my-2" 
+              v-model="inputData[key]" 
+            />
 
             <va-input 
               v-if="value.type == BigInt" 
               :label="value.label" 
-              class="w-full" 
+              class="w-full my-2" 
               type="textarea"
               :min-rows="3"
               :max-rows="6" 
@@ -111,7 +116,7 @@ async function submit() {
             <va-input 
               v-if="value.type == Boolean" 
               :label="value.label" 
-              class="w-full" 
+              class="w-full my-3" 
               type="email"
               v-model="inputData[key]"
             />
@@ -119,8 +124,9 @@ async function submit() {
             <va-date-input 
               v-if="value.type == Date" 
               :label="value.label" 
-              class="w-full" 
-              v-model="inputData[key]" 
+              class="w-full mt-6" 
+              v-model="inputData[key]"
+              placement="bottom"
             />
 
             <va-input 
@@ -131,7 +137,6 @@ async function submit() {
               mask="numeral"
             >
               <template #prependInner>
-                <va-icon style="margin-left: -5px;" name="attach_money" size="small"/>
               </template>
             </va-input>
 
@@ -139,16 +144,17 @@ async function submit() {
               v-if="Array.isArray(value.type)" 
               :label="value.label" 
               :options="value.type" 
-              class="w-full" 
+              class="w-full mt-4" 
               v-model="inputData[key]"
+              placement="bottom"
             />
 
           </span>
 
         </va-card-content>
 
-        <span class="flex justify-center text-danger mb-1 w-full text-center" style="font-size: 18px;">
-          <p>{{ errorMessage }}</p>
+        <span class="flex justify-center text-danger w-full text-center" style="font-size: 18px;">
+          {{ errorMessage }}    
         </span>
 
         <!-- Buttons for submitting and canceling -->

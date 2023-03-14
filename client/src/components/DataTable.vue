@@ -3,8 +3,10 @@ import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { VaDataTable, VaButton, VaIcon, VaProgressCircle, VaInput } from 'vuestic-ui/web-components';
 import DeleteWarning from './DeleteWarning.vue';
+import CreateElement from './CreateElement.vue';
 
 const props = defineProps({
+  title: String,
   endpoint: String,
   columns: Array,
   height: String,
@@ -67,11 +69,12 @@ onMounted(() => {
   }
   refreshData();
 });
-
 </script>
 
 <template>
+  
   <!-- Data table -->
+  <h1 class="mb-4 text-xl font-bold">{{ props.title }}</h1>
   <div class="w-full flex justify-center">
     <span>
       <va-input
@@ -91,7 +94,7 @@ onMounted(() => {
         icon="add" 
         color="success" 
         style="margin-top: -0.5px; max-height: 4px !important;"
-        @click="props.onAdd"
+        @click="() => onAdd(refreshData)"
       >
         Add
       </va-button>
@@ -127,28 +130,6 @@ onMounted(() => {
       </template>
     </va-data-table>
     <va-progress-circle v-else indeterminate class="mx-auto" :style="`margin-top: calc((${props.height} / 2) - 25px)`"/>
-    
   </div>
-
-
-<!-- <va-data-table 
-  :items="projectData"
-  :filter="searchValue"
-  :columns="columns"
-  :item-size="46"
-  virtual-scroller
-  sticky-header
-  striped
-  clickable
-  hoverable
-  @row:click="onRowClick"
-  style="height: 100%"
->
-  <template #cell(actions)="{ rowIndex }">
-    {{ projectData[rowIndex].ID }}
-    <va-button>Test</va-button>
-  </template>
-</va-data-table> -->
-
 </template>
 

@@ -50,7 +50,7 @@ async function deleteElement() {
     :before-close="() => $emit('update:modelValue', false)" 
     no-padding
   >
-    <template #content="{ ok, cancel }">
+    <template #content="{ cancel }">
       <va-card-title>
         <h1 class=" text-base">{{ props.title }}</h1>
       </va-card-title>
@@ -80,12 +80,12 @@ async function deleteElement() {
 
         <va-button 
           color="danger" 
-          icon="delete" 
+          icon="done" 
           :disabled="loading" 
           :loading="loading"
           @click="deleteElement"
         >
-          Delete
+          Continue
         </va-button>
       </va-card-actions>
     </template>

@@ -6,6 +6,8 @@ import {
 } from 'vuestic-ui';
 import DeleteWarning from '../components/DeleteWarning.vue';
 import DataTable from '../components/DataTable.vue';
+import CreateElement from '../components/CreateElement.vue';
+import AddResearcher from '../components/AddResearcher.vue';
 
 // State
 const router = useRouter();
@@ -24,10 +26,16 @@ const updateError = ref("");
 
 const editing = ref(false);
 const deleteWarning = ref(false);
+const refresh = ref();
+
+const showAdds = ref({
+  progress: false,
+  researchers: false,
+  funding: false,
+  achievements: false
+});
 
 // Columns for data tables
-
-// description, percentageComplete, progressDate, totalSpending
 const progressColumns = [
   { key: "description", sortable: true, fromKey: "Description"},
   { key: "completion", sortable: true, fromKey: "PercentageComplete", type: "Percent"},
@@ -35,6 +43,13 @@ const progressColumns = [
   { key: "totalSpending", sortable: true, fromKey: "TotalSpending", type: "Money"},
   { key: "actions"}
 ];
+
+const addProgressInputs = {
+  description: {type: String, label: "Description"},
+  percentageComplete: {type: Number, label: "Completion Percentage"},
+  totalSpending: {type: Number, label: "Total Spending"},
+  progressDate: {type: Date, label: "Date"},
+}
 
 const researchersColumns = [
   { key: "firstName", sortable: true, fromKey: "FirstName" },
@@ -51,12 +66,39 @@ const fundingColumns = [
   { key: "actions" } 
 ];
 
+const institutions = [
+  { value: 1, text: "National Aeronautics & Space Administration" },
+  { value: 2, text: "National Science Foundation" },
+  { value: 3, text: "National Institutes of Health" },
+  { value: 4, text: "U.S. Department of Education" },
+  { value: 5, text: "Grants.gov" }
+];
+
+const addFundingInputs = {
+  amount: {type: Number, label: "Amount"},
+  institutionID: {type: institutions, label: "Institution"},
+  receivedDate: {type: Date, label: "Date Received"}
+}
+
 const achievementColumns = [
   { key: "title", sortable: true, fromKey: "Title" },
   { key: "date", sortable: true, fromKey: "Date", type: "Date"},
   { key: "type", sortable: true, fromKey: "Type"},
   { key: "actions" } 
 ];
+
+const achievementTypes = [
+  { value: 1, text: "Academic Paper" },
+  { value: 2, text: "Book" },
+  { value: 3, text: "Award" },
+  { value: 4, text: "Research Presentation" }
+];
+
+const addAchievementInputs = {
+  title: {type: String, label: "Title"},
+  achievementTypeID: {type: achievementTypes, label: "Type"},
+  date: {type: Date, label: "Date"}
+}
 
 // Functions
 
@@ -109,14 +151,12 @@ async function saveUpdates() {
   } catch (error) {
     updateError.value = error;
   }
-
   updateLoading.value = false;
 }
 
 function startEditing() {
   editing.value = true;
 }
-
 </script>
 
 <template>
@@ -220,49 +260,92 @@ function startEditing() {
 
         <!-- Project-related data tables -->
         <div class="mt-16 mb-12">
-          <h1 class="mb-4 text-xl font-bold">Progress Reports</h1>
           <data-table 
+            title="Progress Reports"
             :endpoint="'/api/projects/' + route.params.id + '/progress'"
             :columns="progressColumns"
             remove-title="Remove Progress Report"
             remove-message="This will permanently remove this progress report. Are you sure you want to continue?"
             height="300px"
+            :on-add="refreshData => {
+              showAdds.progress = true;
+              refresh = refreshData;
+            }"
+          />
+          <create-element 
+            v-model="showAdds.progress"
+            :refresh-table="refresh"
+            title="Add Progress Report"
+            :inputs="addProgressInputs"
+            :post-endpoint="'/api/projects/' + route.params.id + '/progress'"
           />
         </div>
 
         <div class="mb-12">
-          <h1 class="mb-4 text-xl font-bold">Researchers</h1>
           <data-table 
+            title="Researchers"
             :endpoint="'/api/projects/' + route.params.id + '/researchers'"
             :columns="researchersColumns"
             remove-title="Remove Researcher"
             remove-message="This will remove this researcher from the project. Are you sure you want to continue?"
             height="350px"
+            :on-add="refreshData => {
+              showAdds.researchers = true;
+              refresh = refreshData;
+            }"
+          />
+          <add-researcher 
+            v-model="showAdds.researchers"
+            :refresh-table="refresh"
+            :endpoint="'/api/projects/' + route.params.id + '/researchers'"
           />
         </div>
 
         <div class="mb-12">
-          <h1 class="mb-4 text-xl font-bold">Funding Sources</h1>
-          <data-table 
+          <data-table
+            title="Funding Sources" 
             :endpoint="'/api/projects/' + route.params.id + '/funding'"
             :columns="fundingColumns"
             remove-title="Remove Funding Source"
             remove-message="This will permanently remove this funding source. Are you sure you want to continue?"
             height="200px"
+            :on-add="refreshData => {
+              showAdds.funding = true;
+              refresh = refreshData;
+            }"
+          />
+          <create-element 
+            v-model="showAdds.funding"
+            :refresh-table="refresh"
+            title="Add Funding Source"
+            :inputs="addFundingInputs"
+            :post-endpoint="'/api/projects/' + route.params.id + '/funding'"
           />
         </div>
 
         <div>
-          <h1 class="mb-4 text-xl font-bold">Achievements</h1>
-          <data-table 
+          <data-table
+            title="Achievements" 
             :endpoint="'/api/projects/' + route.params.id + '/achievements'"
             :columns="achievementColumns"
             remove-title="Remove Achievement"
             remove-message="This will permanently remove this achievement. Are you sure you want to continue?"
             height="150px"
+            :on-add="refreshData => {
+              showAdds.achievements = true;
+              refresh = refreshData;
+            }"
+          />
+          <create-element 
+            v-model="showAdds.achievements"
+            :refresh-table="refresh"
+            title="Add Achievement"
+            :inputs="addAchievementInputs"
+            :post-endpoint="'/api/projects/' + route.params.id + '/achievements'"
           />
         </div>
-
       </div>
     </div>
+
+    
 </template>
