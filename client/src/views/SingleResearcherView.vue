@@ -6,7 +6,7 @@ import {
     VaCardTitle, VaCardContent, VaCardActions, VaSelect
 } from 'vuestic-ui';
 import DeleteWarning from '../components/DeleteWarning.vue';
-import { update } from 'lodash';
+import DataTable from '../components/DataTable.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -38,6 +38,25 @@ const departments = [
   { value: 10, text: "Mathematics" }
 ];
 
+const projectColumns = [
+  { key: "Title", sortable: true, fromKey: "Title" },
+  { key: "StartDate", sortable: true, sortingFn: sortDate, fromKey: "StartDate", type: "Date"},
+  { key: "EndDate", sortable: true, sortingFn: sortDate, fromKey: "EndDate", type: "Date"},
+  { key: "Progress", sortable: true, fromKey: "Progress", type: "Percent"},
+  { key: "Spending", sortable: true, fromKey: "Spending", type: "Money"},
+  { key: "Budget", sortable: true, fromKey: "Budget", type: "Money"},
+  { key: "actions"}
+];
+
+const achievementColumns = [
+  { key: "title", sortable: true, fromKey: "Title" },
+  { key: "date", sortable: true, fromKey: "Date", type: "Date"},
+  { key: "type", sortable: true, fromKey: "Type"},
+  { key: "actions" } 
+];
+
+
+
 onMounted(async () => {
   const { body } = await (await fetch("/api/researchers/" + route.params.id)).json();
   basicData.value = body;
@@ -52,6 +71,15 @@ onMounted(async () => {
   initialDepartment.value =body.Department;
   updatedData.value = displayData;
 });
+
+function sortDate(firstDateString, secondDateString) {
+  const firstDate = new Date(firstDateString);
+  const secondDate = new Date(secondDateString);
+
+  if (firstDate > secondDate) return 1;
+  else if (firstDate < secondDate) return -1;
+  else return 0;
+}
 
 function goBack() {
   router.push("/researchers");
@@ -90,7 +118,7 @@ function startEditing() {
 </script>
 
 <template>
-    <div class="h-screen py-1 sm:py-2 md:py-3 lg:py-4 px-1 sm:px-3 md:px-6" >
+    <div class="py-1 sm:py-2 md:py-3 lg:py-4 px-1 sm:px-3 md:px-6" >
       <div 
         class="bg-white shadow-slate-400 text-center shadow-lg max-w-6xl mx-auto rounded-lg flex flex-col pb-5"
       >
@@ -114,6 +142,7 @@ function startEditing() {
             <delete-warning 
               v-model="deleteWarning" 
               :delete-endpoint="'/api/researchers/' + route.params.id"
+              title="Delete Researcher"
               message="This will permanently delete this researcher. Are you sure you want to continue?"
               :on-delete="goBack"
             />
@@ -184,6 +213,27 @@ function startEditing() {
           />
         </div>
         
+        <div class="mt-16 mb-12">
+          <h1 class="mb-4 text-xl font-bold">Projects</h1>
+          <data-table 
+            :endpoint="'/api/researchers/' + route.params.id + '/projects'"
+            :columns="projectColumns"
+            :on-row-click="param => router.push(`/projects/${param.item.ID}`)"
+            read-only
+            height="350px"
+          />
+        </div>
+
+        <div class="mb-12">
+          <h1 class="mb-4 text-xl font-bold">Achievements</h1>
+          <data-table 
+            :endpoint="'/api/researchers/' + route.params.id + '/achievements'"
+            :columns="achievementColumns"
+            read-only
+            height="300px"
+          />
+        </div>
+
       </div>
     </div>
 </template>

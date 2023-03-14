@@ -5,7 +5,7 @@ module.exports = async function (context, req) {
     try {
         // connect to the database
         const database = await sql.connect(process.env.SQLConnectionString)
-        const progressID = req.body.id;
+        const progressID = req.body.ID;
 
         const query = 
         `

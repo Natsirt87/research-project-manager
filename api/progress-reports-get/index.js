@@ -10,7 +10,7 @@ module.exports = async function (context, req) {
         // display all progress done of this project
         const query = 
         `
-            SELECT P.Description, P.PercentageComplete, P.ProgressDate, P.TotalSpending
+            SELECT P.ID, P.Description, P.PercentageComplete, P.ProgressDate, P.TotalSpending
             FROM Progress P
                 JOIN ResearchProject RP ON (P.ProjectID = RP.ID)
             WHERE RP.ID = ${projectID}

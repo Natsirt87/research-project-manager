@@ -13,8 +13,8 @@ const router = useRouter();
 
 const columns = [
   { key: "FirstName", sortable: true },
-  { key: "LastName", sortable: true, sortingFn: sortDate},
-  { key: "Email", sortable: true, sortingFn: sortDate},
+  { key: "LastName", sortable: true},
+  { key: "Email", sortable: true},
   { key: "Department", sortable: true}
 ];
 
@@ -90,7 +90,7 @@ onMounted(refreshTable);
             </va-input>
           </span>
           
-          <span class="ml-2">
+          <span class="ml-1">
             <va-button 
               icon="add" 
               color="success" 

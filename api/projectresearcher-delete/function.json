@@ -6,7 +6,7 @@
       "direction": "in",
       "name": "req",
       "methods": ["delete"],
-      "route": "projects/{id:int}/researchers"
+      "route": "projects/{projectID:int}/researchers"
     },
     {
       "type": "http",

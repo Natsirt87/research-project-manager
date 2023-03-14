@@ -89,7 +89,7 @@ onMounted(refreshTable);
             </va-input>
           </span>
           
-          <span class="ml-2">
+          <span class="ml-1">
             <va-button 
               icon="add" 
               color="success" 
